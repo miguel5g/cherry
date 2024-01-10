@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -32,6 +33,7 @@ const formSchema = z
   });
 
 function CreateUserForm() {
+  const navigate = useNavigate();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +51,7 @@ function CreateUserForm() {
 
   function onSubmit(values) {
     const promise = createUserMutation.mutateAsync(values).then(() => {
-      // TODO: Redirecionar para a página inicial
+      navigate('/sign-in');
     });
 
     toast.promise(promise, {
